@@ -9,16 +9,32 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-<label @ref="textField" class="mdc-text-field mdc-text-field--outlined">
-    <span class="mdc-notched-outline">
-        <span class="mdc-notched-outline__leading"></span>
-        <span class="mdc-notched-outline__notch">
-            <span class="mdc-floating-label" id="my-label-id">Your Token</span>
-        </span>
-        <span class="mdc-notched-outline__trailing"></span>
-    </span>
-    <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-</label>
+<div class="mdc-layout-grid grid">
+    <div class="mdc-layout-grid__inner">
+        <label @ref="tokenTextField" class="mdc-text-field mdc-text-field--outlined mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+            <span class="mdc-notched-outline">
+                <span class="mdc-notched-outline__leading"></span>
+                <span class="mdc-notched-outline__notch">
+                    <span class="mdc-floating-label" id="token">Your Token</span>
+                </span>
+                <span class="mdc-notched-outline__trailing"></span>
+            </span>
+            <input type="text" class="mdc-text-field__input" aria-labelledby="token">
+        </label>
+    </div>
+    <div class="mdc-layout-grid__inner">
+        <label @ref="queryTextField" class="mdc-text-field mdc-text-field--outlined mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+            <span class="mdc-notched-outline">
+                <span class="mdc-notched-outline__leading"></span>
+                <span class="mdc-notched-outline__notch">
+                    <span class="mdc-floating-label" id="query">Query</span>
+                </span>
+                <span class="mdc-notched-outline__trailing"></span>
+            </span>
+            <input type="text" class="mdc-text-field__input" aria-labelledby="query">
+        </label>
+    </div>
+</div>
 
 @if (searchResults == null)
 {
@@ -35,12 +51,14 @@ else
 
 @code {
     private SearchResult[] searchResults;
-    private ElementReference textField;
+    private ElementReference tokenTextField;
+    private ElementReference queryTextField;
 
     protected override async Task OnInitializedAsync()
     {
         searchResults = await Http.GetFromJsonAsync<SearchResult[]>("sample-data/search.json");
-        await Js.InvokeVoidAsync("attachMDCTextField", textField);
+        await Js.InvokeVoidAsync("attachMDCTextField", tokenTextField);
+        await Js.InvokeVoidAsync("attachMDCTextField", queryTextField);
     }
 
 }
