@@ -11,6 +11,18 @@
 
 <div class="mdc-layout-grid grid">
     <div class="mdc-layout-grid__inner">
+        <label @ref="slugTextField" class="mdc-text-field mdc-text-field--outlined mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+            <span class="mdc-notched-outline">
+                <span class="mdc-notched-outline__leading"></span>
+                <span class="mdc-notched-outline__notch">
+                    <span class="mdc-floating-label" id="slug">Your Slug</span>
+                </span>
+                <span class="mdc-notched-outline__trailing"></span>
+            </span>
+            <input type="text" class="mdc-text-field__input" aria-labelledby="slug">
+        </label>
+    </div>
+    <div class="mdc-layout-grid__inner">
         <label @ref="tokenTextField" class="mdc-text-field mdc-text-field--outlined mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
             <span class="mdc-notched-outline">
                 <span class="mdc-notched-outline__leading"></span>
@@ -58,12 +70,14 @@ else
 
 @code {
     private SearchResult[] searchResults;
+    private ElementReference slugTextField;
     private ElementReference tokenTextField;
     private ElementReference queryTextField;
 
     protected override async Task OnInitializedAsync()
     {
         searchResults = await Http.GetFromJsonAsync<SearchResult[]>("sample-data/search.json");
+        await Js.InvokeVoidAsync("attachMDCTextField", slugTextField);
         await Js.InvokeVoidAsync("attachMDCTextField", tokenTextField);
         await Js.InvokeVoidAsync("attachMDCTextField", queryTextField);
     }
