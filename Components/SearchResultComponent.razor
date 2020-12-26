@@ -1,15 +1,14 @@
 @using Xis.Models
 
-<h3>@ServiceName</h3>
+<h3>@SearchResult.ServiceName</h3>
 
-@* TODO *@
+@foreach (var issue in @SearchResult.Issues)
+{
+    <IssueComponent Issue="@issue"/>}
 
 @code {
 
     [Parameter]
-    public string ServiceName { get; set; }
-
-    [Parameter]
-    public Issue[] Issues { get; set; }
+    public SearchResult SearchResult { get; set; }
 
 }
