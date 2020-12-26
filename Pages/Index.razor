@@ -1,45 +1,61 @@
 ﻿@page "/"
 @inject HttpClient Http
+@inject IJSRuntime Js
 
 <h1>Weather forecast</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
 
+<label @ref="textField" class="mdc-text-field mdc-text-field--outlined">
+    <span class="mdc-notched-outline">
+        <span class="mdc-notched-outline__leading"></span>
+        <span class="mdc-notched-outline__notch">
+            <span class="mdc-floating-label" id="my-label-id">Your Token</span>
+        </span>
+        <span class="mdc-notched-outline__trailing"></span>
+    </span>
+    <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
+</label>
+
 @if (forecasts == null)
 {
-    <p><em>Loading...</em></p>
+    <p>
+        <em>Loading...</em>
+    </p>
 }
 else
 {
     <table class="table">
         <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
+        <tr>
+            <th>Date</th>
+            <th>Temp. (C)</th>
+            <th>Temp. (F)</th>
+            <th>Summary</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
+        @foreach (var forecast in forecasts)
+        {
+            <tr>
+                <td>@forecast.Date.ToShortDateString()</td>
+                <td>@forecast.TemperatureC</td>
+                <td>@forecast.TemperatureF</td>
+                <td>@forecast.Summary</td>
+            </tr>
+        }
         </tbody>
     </table>
 }
 
 @code {
     private WeatherForecast[] forecasts;
+    private ElementReference textField;
 
     protected override async Task OnInitializedAsync()
     {
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        await Js.InvokeVoidAsync("attachMDCTextField", textField);
     }
 
     public class WeatherForecast
@@ -50,6 +66,7 @@ else
 
         public string Summary { get; set; }
 
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        public int TemperatureF => 32 + (int) (TemperatureC / 0.5556);
     }
+
 }
