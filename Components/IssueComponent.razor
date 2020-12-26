@@ -1,0 +1,17 @@
+@using Xis.Models
+
+<div class="mdc-card mdc-card--outlined">
+    <div class="mdc-card__primary-action">
+        <div class="card__primary">
+            <h2 class="mdc-typography mdc-typography--headline6">@Issue.Title</h2>
+        </div>
+        <div class="mdc-typography mdc-typography--body2 card__body">@Issue.Body</div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public Issue Issue { get; set; }
+
+}
