@@ -20,8 +20,9 @@ namespace Xis.Data
         public async Task<UserSession> CreateUserSession(string slug, string token)
         {
             _httpClient.BaseAddress = new Uri(string.Format(BaseAddress, slug));
-            // TODO
-            return await _httpClient.GetFromJsonAsync<UserSession>("");
+            _httpClient.DefaultRequestHeaders.Remove("Authorization");
+            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            return await _httpClient.GetFromJsonAsync<UserSession>("sessions");
         }
     }
 }
