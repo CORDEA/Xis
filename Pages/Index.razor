@@ -49,7 +49,9 @@
 
     <div class="mdc-layout-grid__inner">
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-5"></div>
-        <button class="mdc-button mdc-button--raised mdc-layout-grid__cell mdc-layout-grid__cell--span-1">
+        <button
+            class="mdc-button mdc-button--raised mdc-layout-grid__cell mdc-layout-grid__cell--span-1"
+            @onclick="Search">
             <span class="mdc-button__label">Search</span>
         </button>
     </div>
@@ -85,6 +87,10 @@ else
         await Js.InvokeVoidAsync("attachMDCTextField", slugTextField);
         await Js.InvokeVoidAsync("attachMDCTextField", tokenTextField);
         await Js.InvokeVoidAsync("attachMDCTextField", queryTextField);
+    }
+
+    private void Search(MouseEventArgs args)
+    {
     }
 
 }
