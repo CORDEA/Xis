@@ -1,25 +1,21 @@
-using System;
-using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Xis.Data;
 using Xis.Models;
 
 namespace Xis.Repositories
 {
     public class SessionRepository
     {
-        private readonly HttpClient _httpClient;
+        private readonly XkitApiClient _apiClient;
 
-        public SessionRepository(HttpClient httpClient)
+        public SessionRepository(XkitApiClient apiClient)
         {
-            _httpClient = httpClient;
+            _apiClient = apiClient;
         }
 
         public async Task<UserSession> Create(string slug, string token)
         {
-            // TODO
-            _httpClient.BaseAddress = new Uri("");
-            return await _httpClient.GetFromJsonAsync<UserSession>("");
+            return await _apiClient.CreateUserSession(slug, token);
         }
     }
 }
