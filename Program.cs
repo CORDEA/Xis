@@ -1,4 +1,3 @@
-using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -15,8 +14,7 @@ namespace Xis
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddSingleton(_ => new HttpClient
-                {BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)});
+            builder.Services.AddSingleton<HttpClient>();
             builder.Services.AddSingleton<XkitApiClient>();
             builder.Services.AddSingleton<SessionRepository>();
 
