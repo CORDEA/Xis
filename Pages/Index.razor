@@ -81,7 +81,7 @@ else
     private string token;
     private string query;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         searchResults = await Http.GetFromJsonAsync<SearchResult[]>("sample-data/search.json");
         await Js.InvokeVoidAsync("attachMDCTextField", slugTextField);
