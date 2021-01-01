@@ -1,8 +1,9 @@
 ﻿@page "/"
-@* ReSharper disable once RedundantUsingDirective *@
-@using Xis.Components
+@using Xis.Repositories
 @using Xis.Models
+@* ReSharper disable once RedundantUsingDirective *@
 @inject HttpClient Http
+@inject SessionRepository Repository;
 @inject IJSRuntime Js
 
 <h1 class="mdc-typography mdc-typography--headline4">Issue finder</h1>
@@ -34,6 +35,16 @@
             <input type="password" class="mdc-text-field__input" aria-labelledby="token" @bind="token">
         </label>
     </div>
+
+    <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-5"></div>
+        <button
+            class="mdc-button mdc-button--raised mdc-layout-grid__cell mdc-layout-grid__cell--span-1"
+            @onclick="Login">
+            <span class="mdc-button__label">Login</span>
+        </button>
+    </div>
+
     <div class="mdc-layout-grid__inner">
         <label @ref="queryTextField" class="mdc-text-field mdc-text-field--outlined mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
             <span class="mdc-notched-outline">
@@ -88,7 +99,16 @@ else
         await Js.InvokeVoidAsync("attachMDCTextField", queryTextField);
     }
 
-    private void Search(MouseEventArgs args)
+    private async void Login(MouseEventArgs args)
+    {
+        if (string.IsNullOrEmpty(slug) || string.IsNullOrEmpty(token))
+        {
+            return;
+        }
+        await Repository.Create(slug, token);
+    }
+
+    private async void Search(MouseEventArgs args)
     {
     }
 
