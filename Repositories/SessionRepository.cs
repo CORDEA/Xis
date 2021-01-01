@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Xis.Data;
-using Xis.Models;
 
 namespace Xis.Repositories
 {
@@ -13,9 +12,9 @@ namespace Xis.Repositories
             _apiClient = apiClient;
         }
 
-        public async Task<UserSession> Create(string slug, string token)
+        public async Task Create(string slug, string token)
         {
-            return await _apiClient.CreateUserSession(slug, token);
+            await _apiClient.CreateUserSession(slug, token);
         }
     }
 }

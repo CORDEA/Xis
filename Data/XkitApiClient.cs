@@ -17,7 +17,7 @@ namespace Xis.Data
             _httpClient = httpClient;
         }
 
-        public async Task<UserSession> CreateUserSession(string slug, string token)
+        public async Task CreateUserSession(string slug, string token)
         {
             _httpClient.BaseAddress = new Uri(string.Format(BaseAddress, slug));
             _httpClient.DefaultRequestHeaders.Remove("Authorization");
@@ -25,7 +25,10 @@ namespace Xis.Data
 
             var request = new HttpRequestMessage(HttpMethod.Post, "sessions");
             var response = await _httpClient.SendAsync(request);
-            return await response.Content.ReadFromJsonAsync<UserSession>();
+            var session = await response.Content.ReadFromJsonAsync<UserSession>();
+
+            _httpClient.DefaultRequestHeaders.Remove("Authorization");
+            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {session!.AccessToken}");
         }
     }
 }
